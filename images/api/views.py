@@ -79,10 +79,10 @@ class TagModelViewSet(ModelViewSet) :
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self) :
-        # return only tags that have images when searching based on tags 
+        # return only tags that have images when searching based on tags
         if self.request.GET.get('exists') :
-            qs = Tag.objects.annotate(num = Count('image'))
-            return qs.filter(num__gt = 0).order_by('content')
+            qs = Tag.objects.annotate(num = Count('image')).order_by('content')
+            return qs.filter(num__gt = 0)
 
         # when creating new image i need all tags
         return Tag.objects.all()

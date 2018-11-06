@@ -7,7 +7,8 @@ router = SimpleRouter()
 router.register('',ImageModelViewSet,base_name = 'image')
 
 urlpatterns = [
-    url('tags',TagModelViewSet.as_view({"get" : 'list'}))
+    url(r'tags(?P<id>\d+)/$',TagModelViewSet.as_view({'put':"update"})),
+    url('tags',TagModelViewSet.as_view({"get" : 'list'})),
 ]
 
 urlpatterns += router.urls

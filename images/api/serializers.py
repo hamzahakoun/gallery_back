@@ -15,20 +15,19 @@ class TagSerializer(serializers.ModelSerializer) :
 
 
 
-
-
 class ImageUpdateSerializer(serializers.ModelSerializer) :
 
 
-    tags = TagSerializer(many = True,read_only = True)
-    tags_list = serializers.CharField(max_length = 1000,write_only = True)
+    tags = TagSerializer(many = True,read_only = True) # to get the new tags upon update
+    tags_list = serializers.CharField(max_length = 1000,write_only = True,default = None) # send tags to create or attach new tags to an existing image
+    tags_ids = serializers.CharField(max_length = 1000,write_only = True,default = None) # remove tags by sending their ids
 
     class Meta :
         model = Image
-        fields = ['deleted','tags','tags_list']
+        fields = ['deleted','tags','tags_list','tags_ids']
 
     def update(self,instance,validated_data) :
-        # if the used wants to deleted the image
+        # if the user wants to deleted the image
         # then remove all links between this image and all assocciated tags
         # then set deleted to True
 
@@ -38,8 +37,17 @@ class ImageUpdateSerializer(serializers.ModelSerializer) :
             instance.save()
             return instance
 
+        # remove tags from an image
+        elif validated_data.get('tags_ids') :
+            print('------------------------------->')
+            print(validated_data.get('tags_ids'))
+            tags_ids = validated_data.get('tags_ids')
+            for tag_id in tags_ids.split('#') :
+                instance.tags.remove(tag_id)
+            instance.save()
+            return instance
+
         else :
-            print('else else else')
             # if the user wants to add new tags on image
             # then create none existing tags and link all tags to this image
             tags = validated_data.get('tags_list').split('#')
