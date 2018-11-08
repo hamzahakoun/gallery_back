@@ -57,10 +57,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_REGEX_WHITELIST = (
-    'http://127.0.0.1:3000',
-    'http://localhost:3000',
-)
+
+CORS_ORIGIN_ALLOW_ALL= True
+# CORS_ORIGIN_REGEX_WHITELIST = (
+#
+#     'http://127.0.0.1:3000',
+#     'http://localhost:3000',
+# )
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),

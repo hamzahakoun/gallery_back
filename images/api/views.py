@@ -38,9 +38,14 @@ class ImageModelViewSet(ModelViewSet) :
 
         # get images based on a list of tags
         if self.request.GET.get('tags') :
-            tags_list = self.request.GET.get('tags').split(',')
-            return get_images_on_tags(tags_list)
 
+            exclude = self.request.GET.get('exclude')
+            tags_list = self.request.GET.get('tags').split(',')
+            if (exclude) :
+                return get_images_on_tags(tags_list).exclude(id = exclude).order_by('-id')
+            else :
+                return get_images_on_tags(tags_list).order_by('-id')
+                
         # get all images liked by a user
         elif self.request.GET.get('liked') :
             user = self.request.user
