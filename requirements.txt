@@ -1,6 +1,6 @@
 certifi==2018.8.24
 chardet==3.0.4
-Django==1.11
+Django==1.11.23
 django-cors-headers==2.4.0
 django-extensions==2.1.0
 django-filter==2.0.0
