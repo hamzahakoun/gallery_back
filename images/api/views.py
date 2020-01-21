@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from events.models import Event
 from .permissions import IsUserOwnerOrReadOnly
 
-###sdfsdfsdfsdfsdfsdfsdfadfddfgdfg
+###sdfsdfsdfsdfsdfsdfsdfadfddfgdfgsdsdf
 
 def get_images_on_tags(tags_list) :
     q = Q()
